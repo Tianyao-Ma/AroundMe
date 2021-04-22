@@ -4,10 +4,12 @@
 *.dll
 *.so
 *.dylib
+*.sum
 
 # Test binary, built with `go test -c`
 *.test
 *.tmp
+
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
@@ -16,4 +18,4 @@
 # vendor/
 
 #file
-.index.go
+index/
