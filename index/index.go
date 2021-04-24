@@ -10,13 +10,13 @@ import (
 const (
         POST_INDEX = "post"
         USER_INDEX = "user"
-        ES_URL = "http://10.128.0.2:9200"
+        ES_URL = ""
 )
 
 func main() {
     client, err := elastic.NewClient(
         elastic.SetURL(ES_URL),
-        elastic.SetBasicAuth("elastic", "112233"))
+        elastic.SetBasicAuth("user", "password"))
     if err != nil {
         panic(err)
     }
