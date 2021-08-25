@@ -20,11 +20,6 @@
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/78308927/130557086-43903742-05e8-4fed-b054-deb8c05b8e63.gif)
 
-<p align="center">
-<video src=https://user-images.githubusercontent.com/78308927/130546210-aa9ed6d3-6423-46da-884c-2a604c9fb4de.mp4 width=600>
-</p>
-
-
 ## 🤖 Tech Stack
 
 * Java
