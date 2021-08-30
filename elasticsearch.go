@@ -7,13 +7,13 @@ import (
 )
 
 const (
-        ES_URL = ""
+        ES_URL = "http://10.128.0.91:9200"
 )
 
 func readFromES(query elastic.Query, index string) (*elastic.SearchResult, error) {
     client, err := elastic.NewClient(
         elastic.SetURL(ES_URL),
-        elastic.SetBasicAuth("user", "password"))
+        elastic.SetBasicAuth("elastic", "12345678"))
     if err != nil {
         return nil, err
     }
@@ -30,3 +30,35 @@ func readFromES(query elastic.Query, index string) (*elastic.SearchResult, error
     return searchResult, nil
 }
 
+func saveToES(i interface{}, index string, id string) error{
+    client, err := elastic.NewClient(
+        elastic.SetURL(ES_URL),
+        elastic.SetBasicAuth("elastic", "12345678"))
+    if err != nil {
+        return err
+    }
+
+    _, err = client.Index().
+        Index(index).
+        Id(id).
+        BodyJson(i).
+        Do(context.Background())
+    return err
+}
+
+func deleteFromES(query elastic.Query, index string) error {
+    client, err := elastic.NewClient(
+        elastic.SetURL(ES_URL),
+        elastic.SetBasicAuth("elastic", "12345678"))
+    if err != nil {
+        return err
+    }
+
+    _, err = client.DeleteByQuery().
+        Index(index).
+        Query(query).
+        Pretty(true).
+        Do(context.Background())
+
+    return err
+}
