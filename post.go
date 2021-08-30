@@ -1,6 +1,7 @@
 package main
 
 import (
+	"mime/multipart"
     "reflect"
 
     "github.com/olivere/elastic/v7"
@@ -9,7 +10,6 @@ import (
 const (
     POST_INDEX  = "post"
 )
-
 
 type Post struct {
     Id      string `json:"id"`
@@ -52,3 +52,20 @@ func getPostFromSearchResult(searchResult *elastic.SearchResult) []Post {
     return posts
 }
 
+func savePost(post *Post, file multipart.File) error {
+    medialink, err := saveToGCS(file, post.Id)
+    if err != nil {
+        return err
+    }
+    post.Url = medialink
+
+    return saveToES(post, POST_INDEX, post.Id)
+}
+
+func deletePost(id string, user string) error {
+    query := elastic.NewBoolQuery()
+    query.Must(elastic.NewTermQuery("id", id))
+    query.Must(elastic.NewTermQuery("user", user))
+
+    return deleteFromES(query, POST_INDEX)
+}
