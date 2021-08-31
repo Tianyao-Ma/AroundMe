@@ -42,9 +42,9 @@
 </p>
 
 - **Scalable web service in Go to handle user posts**.
-- **Users can browse and search recent posts throw two method: byUserName and byKeyword.** [Search Method](#search-method)
+- **Users can browse and search recent posts throw two method: byUserName and byKeyword.** [[Search Method]](#search-method)
 - **Supports user to create/upload personal posts in various media format**.
-- **Integrated database & media storage design with Elastic Search and GSC**. [GCS](#gcs)
+- **Integrated database & media storage design with Elastic Search and GSC**. [[GCS]](#gcs)
 - **Improvement on authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT**. [[JWT Auth]](#jwt-auth)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
