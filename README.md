@@ -131,6 +131,88 @@ func deletePost(id string, user string) error {
     return deleteFromES(query, POST_INDEX)
 }
 ```
+#### Improvement on authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT
+```
+...
+var mySigningKey = []byte("secret")
 
+func signinHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Println("Received one signin request")
+    w.Header().Set("Content-Type", "text/plain")
+    // grant access for all addresses, solving potential CORS error
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+    if r.Method == "OPTIONS" {
+        return
+    }
+
+    //  Get User information from client
+    decoder := json.NewDecoder(r.Body)
+    var user User
+    if err := decoder.Decode(&user); err != nil {
+       ...
+    }
+    
+    exists, err := checkUser(user.Username, user.Password)
+    if err != nil {
+       ...
+    }
+
+    if !exists {
+        ...
+    }
+
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+        "username": user.Username,
+        "exp":      time.Now().Add(time.Hour * 24).Unix(),
+    })
+
+    tokenString, err := token.SignedString(mySigningKey)
+    if err != nil {
+       ...
+    }
+
+    w.Write([]byte(tokenString))
+}
+
+func signupHandler(w http.ResponseWriter, r *http.Request) {
+  
+    ...
+  
+    decoder := json.NewDecoder(r.Body)
+    var user User
+    if err := decoder.Decode(&user); err != nil {
+        http.Error(w, "Cannot decode user data from client", http.StatusBadRequest)
+        fmt.Printf("Cannot decode user data from client %v\n", err)
+        return
+    }
+
+    if user.Username == "" || user.Password == "" || regexp.MustCompile(`^[a-z0-9]$`).MatchString(user.Username) {
+        http.Error(w, "Invalid username or password", http.StatusBadRequest)
+        fmt.Printf("Invalid username or password\n")
+        return
+    }
+
+    success, err := addUser(&user)
+    ...
+  }  
+    
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
+   ...
+   // case user as JWT token, and use the username inside of the token;
+    user := r.Context().Value("user")
+    claims := user.(*jwt.Token).Claims
+    username := claims.(jwt.MapClaims)["username"]
+
+    p := Post{
+        Id: uuid.New(),
+        User: username.(string),
+        Message: r.FormValue("message"),
+    }
+    ...
+}
+
+```
 
 
