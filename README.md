@@ -17,6 +17,7 @@
 </p>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+![AroundMeDemo](https://user-images.githubusercontent.com/78308927/132064678-9892811b-5be4-4090-bc15-09fca1c53152.gif)
 
 ## 🤖 Tech Stack
 
