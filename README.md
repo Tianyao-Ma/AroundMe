@@ -17,7 +17,12 @@
 </p>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
-![AroundMeDemo](https://user-images.githubusercontent.com/78308927/132064678-9892811b-5be4-4090-bc15-09fca1c53152.gif)
+
+## :film_strip: Project Demo
+<p align="center">
+<img src="https://user-images.githubusercontent.com/78308927/132064678-9892811b-5be4-4090-bc15-09fca1c53152.gif" width="800">
+</p>
+
 
 ## 🤖 Tech Stack
 
@@ -45,12 +50,14 @@
 - **Scalable web service in Go to handle user posts**.
 - **Users can browse and search recent posts throw two method: byUserName and byKeyword.** [[Search Method]](#search-method)
 - **Supports user to create/upload personal posts in various media format**.
-- **Optimized media post layout by using [react-grid-gallery](https://github.com/benhowell/react-grid-gallery), which seamlessly adjust posts size with different browser window**.
+- **Optimized media post layout by using [react-grid-gallery](https://github.com/benhowell/react-grid-gallery), which seamlessly adjust posts size with different browser window**.[[PhotoGallery Componenet]](#react-library)
 - **Integrated database & media storage design with Elastic Search and GSC**. [[GCS]](#gcs)
 - **Improvement on authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT**. [[JWT Auth]](#jwt-auth)
 
-![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+## :seedling: For Furture Improvement
 
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+## :spiral_notepad: Sample Code
 ### JWT Auth
 #### * Improvement on authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT
 ```
@@ -221,6 +228,86 @@ func deletePost(id string, user string) error {
 
     return deleteFromES(query, POST_INDEX)
 }
+```
+### React Library
+#### * The grid gallery library helps seamlessly adjust posts size with different browser window size while keep the layout in a balanced look
+```
+function PhotoGallery(props) {
+    const [images, setImages] = useState(props.images);
+    const [curImgIdx, setCurImgIdx] = useState(0);
+
+    const imageArr = images.map((image) => {
+        return {
+            ...image,
+            customOverlay: (
+                <div style={captionStyle}>
+                    <div>{`${image.user}: ${image.caption}`}</div>
+                </div>
+            )
+        };
+    });
+
+    const onDeleteImage = () => {
+        if (window.confirm(`Are you sure you want to delete this image?`)) {
+            const curImg = images[curImgIdx];
+            const newImageArr = images.filter((img, index) => index !== curImgIdx);
+            console.log("delete image ", newImageArr);
+            const opt = {
+                method: "DELETE",
+                url: `${BASE_URL}/post/${curImg.postId}`,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
+                }
+            };
+
+            axios(opt)
+                .then((res) => {
+                    console.log("delete result -> ", res);
+                    // case1: success
+                    if (res.status === 200) {
+                        // step1: set state
+                        setImages(newImageArr);
+                    }
+                })
+                .catch((err) => {
+                    // case2: fail
+                    message.error("Fetch posts failed!");
+                    console.log("fetch posts failed: ", err.message);
+                });
+        }
+    };
+
+    const onCurrentImageChange = (index) => {
+        console.log("curIdx ", index);
+        setCurImgIdx(index);
+    };
+
+    useEffect(() => {
+        setImages(props.images);
+    }, [props.images]);
+
+    return (
+        <div style={wrapperStyle}>
+            <Gallery
+                images={imageArr}
+                enableImageSelection={false}
+                backdropClosesModal={true}
+                currentImageWillChange={onCurrentImageChange}
+                customControls={[
+                    <Button
+                        style={{ marginTop: "10px", marginLeft: "5px" }}
+                        key="deleteImage"
+                        type="primary"
+                        icon={<DeleteOutlined />}
+                        size="small"
+                        onClick={onDeleteImage}
+                    >
+                        Delete Image
+                    </Button>
+                ]}
+            />
+        </div>
+    );
 ```
 
 
