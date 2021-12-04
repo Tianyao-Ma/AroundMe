@@ -13,7 +13,9 @@
 
 ## 🎬 About the project
 <p align="justify"> 
-  This web application allows users to browse, and create postsFor those of you not familiar with Pacman, it's a game where Pacman (the yellow circle with a mouth in the above figure) moves around in a maze and tries to eat as many food pellets (the small white dots) as possible, while avoiding the ghosts (the other two agents with eyes in the above figure). If Pacman eats all the food in a maze, it wins.
+  This project aims at study and recreate the strcture of the common social media application. How should we design the database for larger multi-media files? How to implement UI for users to browser, search and upload their posts, and which search method should we provide? 
+	
+With backend written in Go, UI built with React, and integrated database and media storage design with Elastic Search and GSC, this scalable web application supports users to create/upload personal posts in various media format, and allows them to browse and search recent posts through two methods: byUserName and byKeyword. It also improves authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT
 </p>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
@@ -42,13 +44,8 @@
 </p>
 
 ## :fire: Key Features
-
-<p align="justify"> 
-  For those of you not familiar with Pacman, it's a game where Pacman (the yellow circle with a mouth in the above figure) moves around in a maze and tries to eat as many food pellets (the small white dots) as possible, while avoiding the ghosts (the other two agents with eyes in the above figure). If Pacman eats all the food in a maze, it wins.
-</p>
-
 - **Scalable web service in Go to handle user posts**.
-- **Users can browse and search recent posts throw two method: byUserName and byKeyword.** [[Search Method]](#search-method)
+- **Users can browse and search recent posts through two methods: byUserName and byKeyword.** [[Search Method]](#search-method)
 - **Supports user to create/upload personal posts in various media format**.
 - **Optimized media post layout by using [react-grid-gallery](https://github.com/benhowell/react-grid-gallery), which seamlessly adjust posts size with different browser window**.[[PhotoGallery Componenet]](#react-library)
 - **Integrated database & media storage design with Elastic Search and GSC**. [[GCS]](#gcs)
