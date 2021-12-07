@@ -13,9 +13,10 @@
 
 ## 🎬 About the project
 <p align="justify"> 
-  This project aims at study and recreate the strcture of the common social media application. How should we design the database for larger multi-media files? How to implement UI for users to browser, search and upload their posts, and which search method should we provide? 
-	
-With backend written in Go, UI built with React, and integrated database and media storage design with Elastic Search and GSC, this scalable web application supports users to create/upload personal posts in various media format, and allows them to browse and search recent posts through two methods: byUserName and byKeyword. It also improves authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT
+This project aims to study and recreate the structure of the common social media applications. How should we design the database for larger multi-media files? How to implement UI for users to browse, search, and upload their posts? Which search method should we provide?
+
+With backend written in Go, UI built with React, and integrated database and media storage design with Elastic Search and GSC, this scalable web application supports users to create/upload personal posts in various media format, and allows them to browse and search recent posts through two methods: byUserName and byKeyword. It also improves authentication using token-based registration/login/logout flow with React Router v4 and server-side user authentication with JWT.
+
 </p>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
